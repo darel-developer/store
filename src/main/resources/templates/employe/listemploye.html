@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <th:block th:replace="~{base :: page_head('Liste des employés')}"></th:block>
+</head>
+<body>
+    <div layout:fragment="header" th:replace="~{layouts/_header :: header}"></div>
+    <div layout:fragment="content">
+        <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Liste des employés</h2>
+                <a class="btn btn-primary" th:href="@{/employes/new}">
+                    <i class="fa-solid fa-plus"></i> Ajouter un employé
+                </a>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Ancienneté</th>
+                        <th>Salaire</th>
+                        <th>Poste</th>
+                        <th>Département</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="employe : ${employes}">
+                        <td th:text="${employe.nom}"></td>
+                        <td th:text="${employe.email}"></td>
+                        <td th:text="${employe.anciennete}"></td>
+                        <td th:text="${employe.salaire}"></td>
+                        <td th:text="${employe.poste}"></td>
+                        <td th:text="${employe.departement}"></td>
+                        <td>
+                            <a th:href="@{'/employes/edit/' + ${employe.id}}" class="btn btn-sm btn-warning">Modifier</a>
+                            <a th:href="@{'/employes/delete/' + ${employe.id}}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Voulez-vous vraiment supprimer cet employé ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-secondary mt-3" th:href="@{/}"><i class="fa-solid fa-house"></i> Accueil</a>
+        </div>
+    </div>
+    <div layout:fragment="bas_de_page" th:replace="~{base::bas_de_page}"></div>
+</body>
+</html>

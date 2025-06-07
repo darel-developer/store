@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <th:block th:replace="~{base :: page_head('Créer un employé')}"></th:block>
+</head>
+<body>
+    <div layout:fragment="header" th:replace="~{layouts/_header :: header}"></div>
+    <div layout:fragment="content">
+        <div class="container mt-5">
+            <form th:action="@{/employes/save}" method="post" th:object="${employe}">
+                <fieldset>
+                    <legend>Créer un nouvel employé</legend>
+                    <hr>
+                    <!-- Message flash -->
+                    <div th:if="${msg}" class="alert alert-primary alert-dismissible fade show">
+                        <span th:text="${msg}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    <a class="btn btn-sm btn-primary mb-2 fw-bolder" th:href="@{/employes}">
+                        <i class="fa-solid fa-square-up-right"></i>
+                        Retourner à la liste des employés
+                    </a>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Nom</label>
+                        <input type="text" class="form-control" th:field="*{nom}" placeholder="Nom de l'employé">
+                        <div th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="Email">
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Ancienneté (années)</label>
+                        <input type="number" class="form-control" th:field="*{anciennete}" placeholder="0">
+                        <div th:if="${#fields.hasErrors('anciennete')}" th:errors="*{anciennete}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Salaire</label>
+                        <input type="number" class="form-control" th:field="*{salaire}" placeholder="Salaire">
+                        <div th:if="${#fields.hasErrors('salaire')}" th:errors="*{salaire}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Poste</label>
+                        <select class="form-control" th:field="*{poste}">
+                            <option value="" disabled>Choisir un poste</option>
+                            <option th:each="poste : ${postes}" th:value="${poste}" th:text="${poste}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('poste')}" th:errors="*{poste}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-2">Département</label>
+                        <select class="form-control" th:field="*{departement}">
+                            <option value="" disabled>Choisir un département</option>
+                            <option th:each="dep : ${departements}" th:value="${dep}" th:text="${dep}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('departement')}" th:errors="*{departement}" class="text-danger"></div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-sm btn-success mr-2 fw-bolder">
+                            <i class="fa-solid fa-floppy-disk"></i> Enregistrer
+                        </button>
+                        <button type="reset" class="btn btn-sm btn-secondary fw-bolder">
+                            <i class="fa-solid fa-eject"></i> Annuler
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div layout:fragment="bas_de_page" th:replace="~{base::bas_de_page}"></div>
+</body>
+</html>

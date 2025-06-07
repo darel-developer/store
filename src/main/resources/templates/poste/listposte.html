@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <th:block th:replace="~{base :: page_head('Liste des postes')}"></th:block>
+</head>
+<body>
+    <div layout:fragment="header" th:replace="~{layouts/_header :: header}"></div>
+    <div layout:fragment="content">
+        <div class="container mt-5">
+            <!-- Message flash de succès -->
+            <div th:if="${msg}" class="alert alert-success alert-dismissible fade show">
+                <span th:text="${msg}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Liste des postes</h2>
+                <a class="btn btn-primary" th:href="@{/poste/new}">
+                    <i class="fa-solid fa-plus"></i> Ajouter un poste
+                </a>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Salaire Min</th>
+                        <th>Salaire Max</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="poste : ${postes}">
+                        <td th:text="${poste.libellePoste}"></td>
+                        <td th:text="${poste.salaireMin}"></td>
+                        <td th:text="${poste.salaireMax}"></td>
+                        <td>
+                            <a th:href="@{'/poste/edit/' + ${poste.id}}" class="btn btn-sm btn-warning">Modifier</a>
+                            <a th:href="@{'/poste/delete/' + ${poste.id}}" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Voulez-vous vraiment supprimer ce poste ?');">Supprimer</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-secondary mt-3" th:href="@{/}"><i class="fa-solid fa-house"></i> Accueil</a>
+        </div>
+    </div>
+    <div layout:fragment="bas_de_page" th:replace="~{base::bas_de_page}"></div>
+</body>
+</html>
